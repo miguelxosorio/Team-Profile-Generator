@@ -1,0 +1,1 @@
+// this is where we add the functions that generate the HTML like in the mock-up
