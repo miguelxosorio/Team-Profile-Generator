@@ -2,10 +2,13 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+// Importing the classes 
 const Manager = require('./lib/Manager')
-const Employee = require('./lib/Employee')
+// const Employee = require('./lib/Employee')
 const Intern = require('./lib/Intern')
 const Engineer = require('./lib/Engineer');
+const { TestResult } = require('@jest/types');
+// declaring an empty array for where the employees would be pushed
 const employeeArray = [];
 
 // Add a function for Manager wrapping the inquirer.prompt
@@ -32,7 +35,8 @@ const addTheManager = () => {
             message: "What is the manager's office number?"
         }
     ])
-    .then(managerData => { 
+    .then(managerData => {
+        // desctructuring the object, instead of declaring them one by one, saves lines of code, arguably easier? 
         const { name, id, email, officeNumber } = managerData;
         const manager = new Manager (name, id, email, officeNumber);
 
@@ -74,17 +78,17 @@ const addTheEmployee = () => {
             name: 'email',
             message: "Please enter the employee's email."
         },
-        {   // add if employee is an engineer
+        {   // ask if employee is an engineer
             type: 'input',
             name: 'github',
-            message: "Please enter the employee's github username."
-            // when:(input) => input.role === 'Engineer'
-            
+            message: "Please enter the employee's github username.",
+            when:(input) => input.role === 'Engineer', // setting up the when method passing input as the param, that this question will be asked if input is equal to the string Engineer
         },
-        {   // add if employee is an intern
+        {   // ask if employee is an intern
             type: 'input',
             name: 'school',
-            message: "Please enter the intern's school."
+            message: "Please enter the intern's school.",
+            when:(input) => input.role === 'Intern', // setting up the when method passing input as the param, that this question will be asked if input is equal to the string Intern
         },
         {
             type: 'confirm',
@@ -95,15 +99,28 @@ const addTheEmployee = () => {
     ])
     .then(employeeData => {
         const { name, id, email, role, github, school, confirmEmployee } = employeeData;
-        let employee;
+        let employee; // can't use const, it errors, let makes the variable reusable?
 
         if(role === 'Engineer') {
-            employee = new Engineer (name, id, email, github);
+            employee = new Engineer (name, id, email, github); // using the parameters from the classes
             console.log(employee) // returns Engineer { name: 'mark', id: '12', email: 'momo', github: 'momo' }
         } else if(role === 'Intern') {
-            employee = new Intern (name, id, email, school);
+            employee = new Intern (name, id, email, school); // using the parameters from the classes
             console.log(employee) // returns Intern { name: 'john', id: '23', email: 'momo', school: 'momo' }
         }
+
+        employeeArray.push(employee)
+        console.log(employeeArray) // returns [ Engineer { name: 'M', id: '12', email: 'gmail', github: 'Mgit' }, Intern { name: 'Ad', id: '23', email: 'yahoo', school: 'FSU' } ]
+        // 
+
+        // setting the condition for 'Would you like to add more team members?'
+        // if this returns true, 'Y', the function routes back to the addThenEmployee, asks the questions and then pushes to the employeeArray[]
+        if(confirmEmployee) {
+            return addTheEmployee(employeeArray);
+        } else {
+            // else, or if it returns false, 'N' by default, just return the employeeArray
+            return employeeArray;
+        }  
     })
 }
 
