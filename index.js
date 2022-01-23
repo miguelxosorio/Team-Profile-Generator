@@ -7,7 +7,6 @@ const Manager = require('./lib/Manager')
 // const Employee = require('./lib/Employee')
 const Intern = require('./lib/Intern')
 const Engineer = require('./lib/Engineer');
-const { TestResult } = require('@jest/types');
 // declaring an empty array for where the employees would be pushed
 const employeeArray = [];
 
@@ -44,15 +43,9 @@ const addTheManager = () => {
         console.log(manager); // returns Manager { name: 'Me', id: '222', email: '123', officeNumber: '23' }
         console.log(managerData) // returns { name: 'Me', id: '222', email: '123', officeNumber: '23' }
         console.log(employeeArray); // returns [ Manager { name: 'Me', id: '222', email: '123', officeNumber: '23' } ]
+        console.log(manager.name, manager.id, manager.email, manager.officeNumber); // returns Miguel 2345 miguel@gmail.com 2000
     })
 };
-
-// .then(response => {
-//     const manager = new Manager(response.name, response.id, response.email, response.officeNumber)
-//     employeeArray.push(manager)
-//     addTheEmployee()
-//     console.log(response.name)
-// })
 
 const addTheEmployee = () => {
     
@@ -82,13 +75,13 @@ const addTheEmployee = () => {
             type: 'input',
             name: 'github',
             message: "Please enter the employee's github username.",
-            when:(input) => input.role === 'Engineer', // setting up the when method passing input as the param, that this question will be asked if input is equal to the string Engineer
+            when:(input) => input.role === 'Engineer', // setting up the when method passing input as the param, that this question will only be asked if input role is equal to the string Engineer
         },
         {   // ask if employee is an intern
             type: 'input',
             name: 'school',
             message: "Please enter the intern's school.",
-            when:(input) => input.role === 'Intern', // setting up the when method passing input as the param, that this question will be asked if input is equal to the string Intern
+            when:(input) => input.role === 'Intern', // setting up the when method passing input as the param, that this question will only be asked if input role is equal to the string Intern
         },
         {
             type: 'confirm',
@@ -111,7 +104,6 @@ const addTheEmployee = () => {
 
         employeeArray.push(employee)
         console.log(employeeArray) // returns [ Engineer { name: 'M', id: '12', email: 'gmail', github: 'Mgit' }, Intern { name: 'Ad', id: '23', email: 'yahoo', school: 'FSU' } ]
-        // 
 
         // setting the condition for 'Would you like to add more team members?'
         // if this returns true, 'Y', the function routes back to the addThenEmployee, asks the questions and then pushes to the employeeArray[]
@@ -124,5 +116,19 @@ const addTheEmployee = () => {
     })
 }
 
-// addTheManager()
-addTheEmployee()
+// function to generate HTML page
+const writeTheFile = data => {
+    //fs.writeFile('where to make the file', data, err => { write condition, err, console log err, console log that the file has been generated })
+    fs.writeFile('./dist/index.html', data, err => {
+        // catch error
+        if(err) {
+            console.log(err);
+            return;
+        // if no errors, successful
+        } else {
+            console.log('The team profile has been created, file is found in /dist/index.html');
+        }
+    })
+}
+
+// chain function invocation for addTheManager() and addTheEmployee()
