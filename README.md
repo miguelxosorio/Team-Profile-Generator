@@ -30,7 +30,7 @@
 
   
   * [Video Link](https://watch.screencastify.com/v/wS22v4pDjUjiYea7y0qT)
-  * ![Gif]()
+  * ![Gif](https://github.com/miguelxosorio/Team-Profile-Generator/tree/main/assets/gif)
 
   ## License
 
