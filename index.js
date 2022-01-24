@@ -96,14 +96,14 @@ const addTheEmployee = () => {
 
         if(role === 'Engineer') {
             employee = new Engineer (name, id, email, github); // using the parameters from the classes
-            console.log(employee) // returns Engineer { name: 'mark', id: '12', email: 'momo', github: 'momo' }
+            // console.log(employee) // returns Engineer { name: 'mark', id: '12', email: 'momo', github: 'momo' }
         } else if(role === 'Intern') {
             employee = new Intern (name, id, email, school); // using the parameters from the classes
-            console.log(employee) // returns Intern { name: 'john', id: '23', email: 'momo', school: 'momo' }
+            // console.log(employee) // returns Intern { name: 'john', id: '23', email: 'momo', school: 'momo' }
         }
 
         employeeArray.push(employee)
-        console.log(employeeArray) // returns [ Engineer { name: 'M', id: '12', email: 'gmail', github: 'Mgit' }, Intern { name: 'Ad', id: '23', email: 'yahoo', school: 'FSU' } ]
+        // console.log(employeeArray) // returns [ Engineer { name: 'M', id: '12', email: 'gmail', github: 'Mgit' }, Intern { name: 'Ad', id: '23', email: 'yahoo', school: 'FSU' } ]
 
         // setting the condition for 'Would you like to add more team members?'
         // if this returns true, 'Y', the function routes back to the addThenEmployee, asks the questions and then pushes to the employeeArray[]
