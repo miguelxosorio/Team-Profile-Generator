@@ -7,6 +7,7 @@ const generateHTML = require('./src/generateHTML');
 const Manager = require('./lib/Manager')
 const Intern = require('./lib/Intern')
 const Engineer = require('./lib/Engineer');
+const { buildFailureTestResult } = require('@jest/test-result');
 // declaring an empty array for where the employees would be pushed
 const employeeArray = [];
 
@@ -26,7 +27,16 @@ const addTheManager = () => {
         {
             type: 'input',
             name: 'email',
-            message: "What is the manager's e-mail address?"
+            message: "What is the manager's e-mail address?",
+            validate: email => {
+                validation = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(email)
+                if(validation) {
+                    return true;
+                } else {
+                    console.log('Please enter a valid e-mail address');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -69,7 +79,16 @@ const addTheEmployee = () => {
         {
             type: 'input',
             name: 'email',
-            message: "Please enter the employee's email."
+            message: "Please enter the employee's email.",
+            validate: email => {
+                validation = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/.test(email)
+                if(validation) {
+                    return true;
+                } else {
+                    console.log('Please enter a valid e-mail address');
+                    return false;
+                }
+            }
         },
         {   // only ask if employee is an engineer
             type: 'input',
