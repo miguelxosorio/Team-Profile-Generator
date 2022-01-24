@@ -30,7 +30,7 @@
 
   
   * [Video Link](https://watch.screencastify.com/v/wS22v4pDjUjiYea7y0qT)
-  * ![Gif](https://github.com/miguelxosorio/Team-Profile-Generator/tree/main/assets/gif)
+  * ![Gif](https://github.com/miguelxosorio/Team-Profile-Generator/blob/main/assets/gif/Untitled_%20Jan%2023%2C%202022%209_35%20PM.gif)
 
   ## License
 
