@@ -1,7 +1,39 @@
 // this is where we add the functions that generate the HTML like in the mock-up
 
+generateHTML = (data) => {
+    // declaring this array for where the data of each roles would be pushed
+    emptyArray = [];
+
+    // looping through data
+    for (let i = 0; i < data.length; i++) {
+        // employee variable holds the value of the data
+        const employee = data[i]
+        // role variable's value is the data value chained with the getRole() function which returns the role of the employee
+        const role = employee.getRole();
+        // now if roles return true based on the string Manager, Engineer, Intern, one of these if statements will execute
+        if(role === 'Manager') {
+            // so now we're passing the value of the data in the functions, in this instance stored in the var managerCard
+            const managerCard = generateTheManagerCard(employee);
+            // then pushing that value, now managerCard into the array
+            emptyArray.push(managerCard);
+        } else if (role === 'Engineer') {
+            const engineerCard = generateTheEngineerCard(employee);
+            emptyArray.push(engineerCard)
+        } else if (role === 'Intern') {
+            const internCard = generateTheInternCard(employee);
+            emptyArray.push(internCard)
+        }
+    }
+    // joining the values in the array and storing it in the teamCards variable, now we can use the data inside this var to pass it as an arg and use it in the template lit in the team profile generation
+    const teamCards = emptyArray.join('')
+
+    // passing the array's value into the generateTeamProfilePage and then stored in generateTeam var
+    const generateTeam = generateTeamProfilePage(teamCards);
+    return generateTeam;
+};
+
 // generating the manager card
-const generateTheManagerCard = function () {
+const generateTheManagerCard = function (manager) {
     return `
     <div class="col-4 mt-4">
         <div class="card h-100">
@@ -20,7 +52,7 @@ const generateTheManagerCard = function () {
 };
 
 // generating the engineer card
-const generateTheEngineerCard = function () {
+const generateTheEngineerCard = function (engineer) {
     return `
     <div class="col-4 mt-4">
         <div class="card h-100">
@@ -39,7 +71,7 @@ const generateTheEngineerCard = function () {
 };
 
 // generating the intern card
-const generateTheInternCard = function () {
+const generateTheInternCard = function (intern) {
     return `
     <div class="col-4 mt-4">
         <div class="card h-100">
@@ -57,9 +89,8 @@ const generateTheInternCard = function () {
     `
 };
 
-const generateTeamProfilePage = function() {
+const generateTeamProfilePage = function(teamCards) {
     // `this is where we put the html content inside the backticks`
-
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -82,7 +113,7 @@ const generateTeamProfilePage = function() {
             <div class="container">
                 <div class="row justify-content-center" id="cards">
                     <!-- cards -->
-                    ${'insert the card functions here'}
+                    ${teamCards}
                 </div>
             </div>
         </main>
@@ -91,3 +122,5 @@ const generateTeamProfilePage = function() {
     `
 };
 
+// we export this to index.js
+module.exports = generateHTML;

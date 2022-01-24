@@ -1,10 +1,10 @@
 // Node Modules
 const inquirer = require('inquirer');
 const fs = require('fs');
-
+// importing the generateHTML page
+const generateHTML = require('./src/generateHTML');
 // Importing the classes 
 const Manager = require('./lib/Manager')
-// const Employee = require('./lib/Employee')
 const Intern = require('./lib/Intern')
 const Engineer = require('./lib/Engineer');
 // declaring an empty array for where the employees would be pushed
@@ -40,10 +40,10 @@ const addTheManager = () => {
         const manager = new Manager (name, id, email, officeNumber);
 
         employeeArray.push(manager);
-        console.log(manager); // returns Manager { name: 'Me', id: '222', email: '123', officeNumber: '23' }
-        console.log(managerData) // returns { name: 'Me', id: '222', email: '123', officeNumber: '23' }
-        console.log(employeeArray); // returns [ Manager { name: 'Me', id: '222', email: '123', officeNumber: '23' } ]
-        console.log(manager.name, manager.id, manager.email, manager.officeNumber); // returns Miguel 2345 miguel@gmail.com 2000
+        //console.log(manager); // returns Manager { name: 'Me', id: '222', email: '123', officeNumber: '23' }
+        //console.log(managerData) // returns { name: 'Me', id: '222', email: '123', officeNumber: '23' }
+        //console.log(employeeArray); // returns [ Manager { name: 'Me', id: '222', email: '123', officeNumber: '23' } ]
+        //console.log(manager.name, manager.id, manager.email, manager.officeNumber); // returns Miguel 2345 miguel@gmail.com 2000
     })
 };
 
@@ -71,13 +71,13 @@ const addTheEmployee = () => {
             name: 'email',
             message: "Please enter the employee's email."
         },
-        {   // ask if employee is an engineer
+        {   // only ask if employee is an engineer
             type: 'input',
             name: 'github',
             message: "Please enter the employee's github username.",
             when:(input) => input.role === 'Engineer', // setting up the when method passing input as the param, that this question will only be asked if input role is equal to the string Engineer
         },
-        {   // ask if employee is an intern
+        {   // only ask if employee is an intern
             type: 'input',
             name: 'school',
             message: "Please enter the intern's school.",
@@ -132,3 +132,14 @@ const writeTheFile = data => {
 }
 
 // chain function invocation for addTheManager() and addTheEmployee()
+addTheManager()
+.then(addTheEmployee)
+.then(employeeArray => {
+    return generateHTML(employeeArray);
+})
+.then(teamHTML => {
+    return writeTheFile(teamHTML);
+})
+.catch(err => {
+    console.log(err);
+});
